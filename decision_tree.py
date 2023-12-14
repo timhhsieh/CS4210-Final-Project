@@ -5,61 +5,69 @@
 
 
 # ---------------------------------------
-from sklearn import datasets
-import sklearn.model_selection as ms
+
 from sklearn import tree
 import numpy as np
 import pandas as pd
 
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
-import csv
 
-def main():
+from sklearn import datasets, model_selection
+from sklearn.tree import DecisionTreeClassifier
 
-    X_full = []
-    y_encoded = []
+iris = datasets.load_iris()
 
-    with open("wdbc.csv", mode='r') as file:
-        csvFile = csv.reader(file)
+X = np.array(iris.data)
+Y = np.array(iris.target)
 
-        for lines in csvFile:
-            y_encoded.append(np.where(lines == 'M', 1, 0))
+print("Before split training testing")
+print("Data instances:", X.shape)
+print("Target Values: ", Y.shape)
+
+print("Using 20% for testing 80% for training to split data set: ")
+X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size = 0.2, random_state = 42)
+
+print("Training sets: ", X_train.shape)
+print("Testing sets: ", X_test.shape)
 
 
-    encoder = LabelEncoder()
-    y_encoded = encoder.fit_transform(y_encoded)
+print("tuning hyper-parameters")
+max_depths = np.array([1, 2, 3, 5, 7, 9, 11])
 
-    X_train, X_test, y_train, y_test = ms.train_test_split(X_full, y_encoded, stratify = y, test_size = 0.2,
-                                                           random_state = 42)
+train_score = []
+test_score = []
 
-    clf = tree.DecisionTreeClassifier(random_state = 42)
-
+for d in max_depths :
+    clf = tree.DecisionTreeClassifier(max_depth = d, random_state = 42)
     clf.fit(X_train, y_train)
+    train_score.append(clf.score(X_train, y_train))
+    test_score.append(clf.score(X_test, y_test))
 
-    clf.score(X_test, y_test)
 
-    # with open("tree.dot", 'w') as f :
-    #    f = tree.export_graphviz(dtc, out_file = f, feature_names = data.feature_names, class_names =
-    #    data.target_names)
+plt.style.use('ggplot')
 
-    # tuning hyper-parameters
-    max_depths = np.array([1, 2, 3, 5, 7, 9, 11])
+plt.figure(figsize = (10, 6))
+plt.plot(max_depths, train_score, 'o-', linewidth = 3, label = 'train')
+plt.plot(max_depths, test_score, 's-', linewidth = 3, label = 'test')
+plt.xlabel('max_depth')
+plt.ylabel('score')
+plt.ylim(0.85, 1.1)
+plt.legend()
+plt.show()
 
-    train_score = []
-    test_score = []
-    for d in max_depths :
-        clf = tree.DecisionTreeClassifier(max_depth = d, random_state = 42)
-        clf.fit(X_train, y_train)
-        train_score.append(clf.score(X_train, y_train))
-        test_score.append(clf.score(X_test, y_test))
 
-    #plt.style.use('ggplot')
+#print("Training Performance: ")
 
-    #plt.figure(figsize = (10, 6))
-    #plt.plot(max_depths, train_score, 'o-', linewidth = 3, label = 'train')
-    #plt.plot(max_depths, test_score, 's-', linewidth = 3, label = 'test')
-    #plt.xlabel('max_depth')
-    #plt.ylabel('score')
-    #plt.ylim(0.85, 1.1)
-    #plt.legend()
+#train_pred = banana_tree.predict(X_train)
+#t1 = sum(train_pred == y_train)
+#print("predict true / # of ground tree ", t1, len(y_test))
+#print("--> accuracy = ", t1 / len(y_test))
+
+#print("Test Performance: ")
+#test_pred = banana_tree.predict(X_test)
+#t2 = sum(test_pred == y_train)
+#print("predict true / # of ground tree ", t2, len(y_test))
+#print("--> accuracy = ", t2 / len(y_test))
+#
+#
