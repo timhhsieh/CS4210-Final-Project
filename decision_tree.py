@@ -16,10 +16,10 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn import datasets, model_selection
 from sklearn.tree import DecisionTreeClassifier
 
-iris = datasets.load_iris()
+data = datasets.breastcancer()
 
-X = np.array(iris.data)
-Y = np.array(iris.target)
+X = np.array(data.data)
+Y = np.array(data.target)
 
 print("Before split training testing")
 print("Data instances:", X.shape)
@@ -57,17 +57,3 @@ plt.legend()
 plt.show()
 
 
-#print("Training Performance: ")
-
-#train_pred = banana_tree.predict(X_train)
-#t1 = sum(train_pred == y_train)
-#print("predict true / # of ground tree ", t1, len(y_test))
-#print("--> accuracy = ", t1 / len(y_test))
-
-#print("Test Performance: ")
-#test_pred = banana_tree.predict(X_test)
-#t2 = sum(test_pred == y_train)
-#print("predict true / # of ground tree ", t2, len(y_test))
-#print("--> accuracy = ", t2 / len(y_test))
-#
-#
