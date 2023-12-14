@@ -16,7 +16,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn import datasets, model_selection
 from sklearn.tree import DecisionTreeClassifier
 
-data = datasets.breastcancer()
+data = datasets.load_breast_cancer()
 
 X = np.array(data.data)
 Y = np.array(data.target)
