@@ -18,5 +18,7 @@ Welcome to our project conducted at [California Polytechnic State University](ht
 - [Decision Trees](https://github.com/timhhsieh/CS4210-Final-Project/blob/main/decision_tree.py)
 - [Naive Bayes](https://github.com/timhhsieh/CS4210-Final-Project/blob/main/naivebayes.ipynb)
 - [Neural Networks](https://github.com/timhhsieh/CS4210-Final-Project/tree/main/NeuralNetwork)
+    - Neural Networks using [TensorFlow](https://github.com/timhhsieh/CS4210-Final-Project/blob/main/NeuralNetwork/TensorFlow.ipynb)
+    - Neural Networks using [PyTorch](https://github.com/timhhsieh/CS4210-Final-Project/blob/main/NeuralNetwork/PyTorch.ipynb)
 
 Our study, using the Breast Cancer Wisconsin dataset, focuses on minimizing false negatives, potentially revolutionizing breast cancer diagnostics and improving diagnostic accuracy.
